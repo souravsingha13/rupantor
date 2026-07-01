@@ -43,6 +43,10 @@ class User(Base):
         index=True,
         nullable=False,
     )
+    address: Mapped[str | None] = mapped_column(
+        String(500),
+        nullable=True,
+    )
 
     password_hash: Mapped[str] = mapped_column(
         String(255),
