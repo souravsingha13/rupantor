@@ -4,6 +4,7 @@ from jose import jwt, JWTError
 from core.config import settings
 
 from db.session import get_db
+from api.dependencies import get_current_user
 from models.user import User
 from schemas.user import UserCreate, UserResponse
 from schemas.auth import TokenResponse, LoginRequest, RefreshTokenRequest
@@ -121,6 +122,6 @@ async def refresh_token(request: RefreshTokenRequest):
         )
 
 
-@router.post("/logout")
-async def logout():
-    return {"message": "Logout endpoint"}
+@router.post("/logout", status_code=status.HTTP_200_OK)
+async def logout(current_user: User = Depends(get_current_user)):
+    return {"message": "Successfully logged out."}
